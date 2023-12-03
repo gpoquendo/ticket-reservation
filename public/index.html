@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Airline Ticket Reservation</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="airline_image.jpeg" alt="Airline Image">
+            <h1>Airline Ticket Reservation</h1>
+        </header>
+        
+        <form id="reservationForm" action="/submit-reservation" method="post">
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="flightDate">Flight Date:</label>
+            <input type="date" id="flightDate" name="flightDate" required>
+
+            <label for="roundTrip">Round-Trip:</label>
+            <input type="checkbox" id="roundTrip" name="roundTrip">
+
+            <div id="returnDateContainer" style="display: none;">
+                <label for="returnDate">Return Flight Date:</label>
+                <input type="date" id="returnDate" name="returnDate">
+            </div>
+
+            <input type="submit" id="reserveTicketButton" value="Reserve Ticket">
+        </form>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
