@@ -21,7 +21,6 @@ app.post('/submit-reservation', (req, res) => {
         return inputDate > currentDate;
     };
 
-    //if (!isValidDate(flightDate)) {
     if (!isValidDate(flightDate) || (roundTrip && !isValidDate(returnDate))) {
         return res.sendFile(__dirname + '/public/invalid-date.html');
     }
