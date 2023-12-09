@@ -10,14 +10,4 @@ document.addEventListener("DOMContentLoaded", function () {
             returnDateContainer.style.display = "none";
         }
     });
-
-    reservationForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        var email = document.getElementById("email").value;
-        var flightDate = document.getElementById("flightDate").value;
-
-        // Submit the reservation form
-        reservationForm.submit();
-    });
 });
