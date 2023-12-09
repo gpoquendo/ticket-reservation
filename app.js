@@ -1,12 +1,17 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
+const validator = require('validator');
 
 const app = express();
 const port = 3000;
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
+
+function validateEmail(email) {
+    return validator.isEmail(email);
+}
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
@@ -15,22 +20,25 @@ app.get('/', (req, res) => {
 app.post('/submit-reservation', (req, res) => {
     const { email, flightDate, roundTrip, returnDate } = req.body;
 
-    const isValidEmail = (email) => {
-        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(String(email).toLowerCase());
-    };
+    const emailToValidate = email;
 
-    if (!isValidEmail(email)) {
+    if (!validateEmail(emailToValidate)) {
+        console.log('Email is not valid');
         return res.sendFile(__dirname + '/public/invalid-email.html');
     }
-    
+
     const isValidDate = (dateString) => {
         const currentDate = new Date();
         const inputDate = new Date(dateString);
         return inputDate > currentDate;
     };
 
-    if (!isValidDate(flightDate) || (roundTrip && !isValidDate(returnDate))) {
+    const isValidReturnDate = (dateString) => {
+        const inputDate = new Date(dateString);
+        return inputDate > flightDate;
+    }
+
+    if (!isValidDate(flightDate) || (roundTrip && !isValidReturnDate(returnDate))) {
         return res.sendFile(__dirname + '/public/invalid-date.html');
     }
 
