@@ -33,12 +33,13 @@ app.post('/submit-reservation', (req, res) => {
         return inputDate > currentDate;
     };
 
-    const isValidReturnDate = (dateString) => {
-        const inputDate = new Date(dateString);
-        return inputDate > flightDate;
+    const isValidReturnDate = (flight, flightReturn) => {
+        const inputDate = new Date(flight);
+        const returnFlight = new Date(flightReturn);
+        return returnFlight > inputDate;
     }
 
-    if (!isValidDate(flightDate) || (roundTrip && !isValidReturnDate(returnDate))) {
+    if (!isValidDate(flightDate) || (roundTrip && !isValidReturnDate(flightDate, returnDate))) {
         return res.sendFile(__dirname + '/public/invalid-date.html');
     }
 
